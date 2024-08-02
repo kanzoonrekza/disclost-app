@@ -16,7 +16,7 @@
 	<Header />
 	<Sidebar />
 
-	<div class="overflow-scroll rounded-lg border border-slate-400 bg-white p-2">
+	<div class="overflow-scroll rounded-lg border border-slate-400 bg-white">
 		<slot />
 	</div>
 </div>
