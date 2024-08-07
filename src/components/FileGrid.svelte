@@ -1,4 +1,6 @@
 <script lang="ts">
+	import FileDropdownMenu from './FileDropdownMenu.svelte';
+
 	type File = {
 		id: number;
 		name: string;
@@ -16,7 +18,6 @@
 	<div class="flex items-start justify-between gap-2">
 		<!-- TODO: hover show full name -->
 		<span class="line-clamp-2 text-sm">{file.name}</span>
-		<!-- TODO: on click show options -->
-		<button>::</button>
+		<FileDropdownMenu data={file} />
 	</div>
 </div>
