@@ -2,32 +2,32 @@
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
 	import { fly } from 'svelte/transition';
 
-	export let data:any;
+	export let data: any;
 
 	const {
 		elements: { trigger, menu, item, overlay },
 		states: { open }
 	} = createDropdownMenu({
-		forceVisible: true,
+		forceVisible: true
 	});
 
 	const options = [
 		{
 			label: 'Details',
 			onClick: () => {
-				console.log('Details',data);
+				console.log('Details', data);
 			}
 		},
 		{
 			label: 'Copy link',
 			onClick: () => {
-				console.log('Copy link',data);
+				console.log('Copy link', data);
 			}
 		},
 		{
 			label: 'Delete',
 			onClick: () => {
-				console.log('Delete',data);
+				console.log('Delete', data);
 			}
 		}
 	];

@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 
+// This is only a mock data on lo-fi slicing phase.
 export const load = (async () => {
 	// TODO: fetch data from server
 	const response = {
