@@ -10,7 +10,10 @@
 		elements: { trigger, menu, item, overlay },
 		states: { open }
 	} = createDropdownMenu({
-		forceVisible: true
+		forceVisible: true,
+		positioning: {
+			placement: 'bottom-end',
+		}
 	});
 
 	const downloadFromUrl = async (url: string, fileName: string) => {
@@ -97,7 +100,7 @@
 		transition:fly={{ duration: 300, y: -10 }}
 	>
 		{#each options as option}
-			<button class="" use:melt={$item} on:click={option.onClick}>{option.label}</button>
+			<button class="text-left" use:melt={$item} on:click={option.onClick}>{option.label}</button>
 		{/each}
 	</div>
 {/if}
