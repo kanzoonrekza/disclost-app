@@ -18,6 +18,6 @@
 	<div class="flex items-start justify-between gap-2">
 		<!-- TODO: hover show full name -->
 		<span class="line-clamp-2 text-sm">{file.name}</span>
-		<FileDropdownMenu data={file} />
+		<FileDropdownMenu itemData={file} />
 	</div>
 </div>

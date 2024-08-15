@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
+	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { fly } from 'svelte/transition';
 
-	export let data: any;
+	export let itemData: any;
 
 	const {
 		elements: { trigger, menu, item, overlay },
@@ -11,23 +12,54 @@
 		forceVisible: true
 	});
 
+	const downloadFromUrl = async (url: string, fileName: string) => {
+		const response = await fetch(url, {
+			method: 'GET'
+		});
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+
+		const blob = await response.blob();
+		const blobUrl = URL.createObjectURL(blob);
+
+		const link = document.createElement('a');
+		link.href = blobUrl;
+		link.download = fileName || 'download';
+
+		document.body.appendChild(link);
+		link.click();
+
+		document.body.removeChild(link);
+		URL.revokeObjectURL(blobUrl);
+	};
+
+	const downloadMutation = createMutation({
+		mutationFn: async (id: string) => {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/file_url/${id}`, {
+				method: 'GET'
+			});
+			return res.json();
+		},
+		onSuccess: (data, id) => {
+			downloadFromUrl(data.url, itemData.name);
+		},
+		onError: (error) => {
+			console.log('error', error);
+		}
+	});
+
 	const options = [
 		{
-			label: 'Details',
+			label: 'Download',
 			onClick: () => {
-				console.log('Details', data);
-			}
-		},
-		{
-			label: 'Copy link',
-			onClick: () => {
-				console.log('Copy link', data);
+				$downloadMutation.mutate(itemData.id);
 			}
 		},
 		{
 			label: 'Delete',
 			onClick: () => {
-				console.log('Delete', data);
+				console.log('Delete', itemData);
 			}
 		}
 	];
