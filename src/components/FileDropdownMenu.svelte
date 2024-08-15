@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Icon from '$lib/icons/Icon.svelte';
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
 	import { createMutation, queryOptions } from '@tanstack/svelte-query';
 	import { fly } from 'svelte/transition';
@@ -12,7 +13,7 @@
 	} = createDropdownMenu({
 		forceVisible: true,
 		positioning: {
-			placement: 'bottom-end',
+			placement: 'bottom-end'
 		}
 	});
 

@@ -24,6 +24,7 @@
 </script>
 
 <button
+class="bg-slate-700 hover:bg-slate-800 text-white rounded px-6 py-2 font-bold"
 	on:click={() => {
 		//@ts-ignore
 		document.getElementById('file-input').click();
