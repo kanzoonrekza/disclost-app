@@ -8,6 +8,7 @@
 		createdAt: string;
 	};
 	export let file: File;
+	export let refetch: () => void;
 </script>
 
 <div class="grid h-full grid-rows-[80px_1fr]">
@@ -18,6 +19,6 @@
 	<div class="flex items-start justify-between gap-2">
 		<!-- TODO: hover show full name -->
 		<span class="line-clamp-2 text-sm">{file.name}</span>
-		<FileDropdownMenu itemData={file} />
+		<FileDropdownMenu itemData={file} refetch={refetch} />
 	</div>
 </div>

@@ -20,7 +20,7 @@
 		<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
 			{#each $query.data as item}
 				<li>
-					<FileGrid file={item} />
+					<FileGrid file={item} refetch={() => $query.refetch()} />
 				</li>
 			{/each}
 		</ul>

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
-	import { createMutation, createQuery } from '@tanstack/svelte-query';
+	import { createMutation, queryOptions } from '@tanstack/svelte-query';
 	import { fly } from 'svelte/transition';
 
 	export let itemData: any;
+	export let refetch: () => void;
 
 	const {
 		elements: { trigger, menu, item, overlay },
@@ -53,6 +54,21 @@
 		}
 	});
 
+	const deleteMutation = createMutation({
+		mutationFn: async (id: string) => {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/file/${id}`, {
+				method: 'DELETE'
+			});
+			return res.json();
+		},
+		onSuccess: (data, id) => {
+			refetch();
+		},
+		onError: (error) => {
+			console.log('error', error);
+		}
+	});
+
 	const options = [
 		{
 			label: 'Download',
@@ -63,7 +79,7 @@
 		{
 			label: 'Delete',
 			onClick: () => {
-				console.log('Delete', itemData);
+				$deleteMutation.mutate(itemData.id);
 			}
 		}
 	];
