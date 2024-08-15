@@ -1,0 +1,1 @@
+export type IconName = 'file-image' | 'file';
