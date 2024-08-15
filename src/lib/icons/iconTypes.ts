@@ -1,1 +1,1 @@
-export type IconName = 'file-image' | 'file';
+export type IconName = 'dots-three-circle' | 'file-image' | 'file';

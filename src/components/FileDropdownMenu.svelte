@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Icon from '$lib/icons/Icon.svelte';
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
 	import { createMutation, queryOptions } from '@tanstack/svelte-query';
 	import { fly } from 'svelte/transition';
@@ -12,7 +13,7 @@
 	} = createDropdownMenu({
 		forceVisible: true,
 		positioning: {
-			placement: 'bottom-end',
+			placement: 'bottom-end'
 		}
 	});
 
@@ -89,7 +90,7 @@
 </script>
 
 <button type="button" use:melt={$trigger} aria-label="Update dimensions">
-	<span>::</span>
+	<Icon icon="dots-three-circle" size={20} />
 </button>
 
 {#if $open}
