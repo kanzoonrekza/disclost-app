@@ -89,7 +89,7 @@
 </script>
 
 <button type="button" use:melt={$trigger} aria-label="Update dimensions">
-	<span>::</span>
+	<Icon icon="dots-three-circle" size={20} />
 </button>
 
 {#if $open}
