@@ -13,25 +13,29 @@
 	});
 
 	const downloadFromUrl = async (url: string, fileName: string) => {
-		const response = await fetch(url, {
-			method: 'GET'
-		});
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
+		try {
+			const response = await fetch(url, {
+				method: 'GET'
+			});
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+
+			const blob = await response.blob();
+			const blobUrl = URL.createObjectURL(blob);
+
+			const link = document.createElement('a');
+			link.href = blobUrl;
+			link.download = fileName || 'download';
+
+			document.body.appendChild(link);
+			link.click();
+
+			document.body.removeChild(link);
+			URL.revokeObjectURL(blobUrl);
+		} catch {
+			window.open(url, '_blank');
 		}
-
-		const blob = await response.blob();
-		const blobUrl = URL.createObjectURL(blob);
-
-		const link = document.createElement('a');
-		link.href = blobUrl;
-		link.download = fileName || 'download';
-
-		document.body.appendChild(link);
-		link.click();
-
-		document.body.removeChild(link);
-		URL.revokeObjectURL(blobUrl);
 	};
 
 	const downloadMutation = createMutation({
