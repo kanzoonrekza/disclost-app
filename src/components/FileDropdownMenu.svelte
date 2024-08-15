@@ -6,6 +6,7 @@
 
 	export let itemData: any;
 	export let refetch: () => void;
+	export let location: 'dashboard' | 'recycle-bin';
 
 	const {
 		elements: { trigger, menu, item, overlay },
@@ -59,9 +60,10 @@
 	});
 
 	const deleteMutation = createMutation({
-		mutationFn: async (id: string) => {
+		mutationFn: async ({id, jsonData}:{id: string, jsonData:JSON}) => {
 			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/file/${id}`, {
-				method: 'DELETE'
+				method: 'DELETE',
+				body: JSON.stringify(jsonData)
 			});
 			return res.json();
 		},
@@ -73,20 +75,30 @@
 		}
 	});
 
-	const options = [
-		{
-			label: 'Download',
-			onClick: () => {
-				$downloadMutation.mutate(itemData.id);
-			}
-		},
-		{
-			label: 'Delete',
-			onClick: () => {
-				$deleteMutation.mutate(itemData.id);
-			}
-		}
-	];
+	const options =
+		location === 'dashboard'
+			? [
+					{
+						label: 'Download',
+						onClick: () => {
+							$downloadMutation.mutate(itemData.id);
+						}
+					},
+					{
+						label: 'Delete',
+						onClick: () => {
+							$deleteMutation.mutate(itemData.id);
+						}
+					}
+				]
+			: [
+					{
+						label: 'Restore',
+						onClick: () => {
+							console.log('restore', itemData);
+						}
+					}
+				];
 </script>
 
 <button type="button" use:melt={$trigger} aria-label="Update dimensions">
