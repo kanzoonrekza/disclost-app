@@ -1,18 +1,29 @@
 <script lang="ts">
+	import { createQuery } from '@tanstack/svelte-query';
 	import FileGrid from '../../../components/FileGrid.svelte';
-	import type { PageData } from './$types';
 
-	export let data: PageData;
+	const query = createQuery({
+		queryKey: ['all-files'],
+		queryFn: async () =>
+			await fetch(`${import.meta.env.VITE_BASE_URL}/file/recycle-bin`).then((r) => r.json())
+	});
 </script>
 
 <h1 class="sticky top-0 bg-inherit p-4 text-3xl font-bold">Recycle Bin</h1>
-
 <div class="p-4">
-	<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-		{#each data.data as item}
-			<li>
-				<FileGrid file={item} />
-			</li>
-		{/each}
-	</ul>
+	{#if $query.isFetching}
+		Loading...
+	{/if}
+	{#if $query.isError}
+		Error: {$query.error.message}
+	{/if}
+	{#if $query.isSuccess && !$query.isFetching}
+		<ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+			{#each $query.data as item}
+				<li>
+					<FileGrid file={item} refetch={() => $query.refetch()} />
+				</li>
+			{/each}
+		</ul>
+	{/if}
 </div>
