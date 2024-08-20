@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Icon from '$lib/icons/Icon.svelte';
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
-	import { createMutation, queryOptions } from '@tanstack/svelte-query';
+	import { createMutation } from '@tanstack/svelte-query';
 	import { fly } from 'svelte/transition';
 
 	export let itemData: any;
 	export let refetch: () => void;
-	export let location: 'dashboard' | 'recycle-bin';
 
 	const {
 		elements: { trigger, menu, item, overlay },
@@ -51,7 +51,7 @@
 			});
 			return res.json();
 		},
-		onSuccess: (data, id) => {
+		onSuccess: (data) => {
 			downloadFromUrl(data.url, itemData.name);
 		},
 		onError: (error) => {
@@ -60,14 +60,28 @@
 	});
 
 	const deleteMutation = createMutation({
-		mutationFn: async ({id, jsonData}:{id: string, jsonData:JSON}) => {
+		mutationFn: async (id: string) => {
 			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/file/${id}`, {
-				method: 'DELETE',
-				body: JSON.stringify(jsonData)
+				method: 'DELETE'
 			});
 			return res.json();
 		},
-		onSuccess: (data, id) => {
+		onSuccess: () => {
+			refetch();
+		},
+		onError: (error) => {
+			console.log('error', error);
+		}
+	});
+
+	const recoverMutation = createMutation({
+		mutationFn: async (id: string) => {
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/file/${id}/recover`, {
+				method: 'PATCH'
+			});
+			return res.json();
+		},
+		onSuccess: () => {
 			refetch();
 		},
 		onError: (error) => {
@@ -76,8 +90,18 @@
 	});
 
 	const options =
-		location === 'dashboard'
+		$page.url.pathname == '/recycle-bin'
 			? [
+					{
+						label: 'Recover',
+						onClick: () => {
+							// console.log(itemData.id);
+
+							$recoverMutation.mutate(itemData.id);
+						}
+					}
+				]
+			: [
 					{
 						label: 'Download',
 						onClick: () => {
@@ -88,14 +112,6 @@
 						label: 'Delete',
 						onClick: () => {
 							$deleteMutation.mutate(itemData.id);
-						}
-					}
-				]
-			: [
-					{
-						label: 'Restore',
-						onClick: () => {
-							console.log('restore', itemData);
 						}
 					}
 				];
