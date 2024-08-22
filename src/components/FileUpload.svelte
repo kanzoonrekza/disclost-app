@@ -8,23 +8,23 @@
 				body: formData
 			});
 		},
-    onSuccess: () => {
-      window.location.reload();
-    },
+		onSuccess: () => {
+			window.location.reload();
+		}
 	});
 
 	const uploadFile = (e: Event) => {
 		const input = e.target as HTMLInputElement;
 		if (input.files && input.files.length > 0) {
-      const formData = new FormData();
-      formData.append('file', input.files[0]);
+			const formData = new FormData();
+			formData.append('file', input.files[0]);
 			$uploadMutation.mutate(formData);
 		}
 	};
 </script>
 
 <button
-class="bg-slate-700 hover:bg-slate-800 text-white rounded px-6 py-2 font-bold"
+	class="rounded bg-slate-700 px-6 py-2 font-bold text-white hover:bg-slate-800"
 	on:click={() => {
 		//@ts-ignore
 		document.getElementById('file-input').click();

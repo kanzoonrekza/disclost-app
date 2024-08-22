@@ -95,9 +95,13 @@
 					{
 						label: 'Recover',
 						onClick: () => {
-							// console.log(itemData.id);
-
 							$recoverMutation.mutate(itemData.id);
+						}
+					},
+					{
+						label: 'Permanently Delete',
+						onClick: () => {
+							$deleteMutation.mutate(itemData.id);
 						}
 					}
 				]

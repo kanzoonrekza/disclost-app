@@ -1,1 +1,7 @@
-export type IconName = 'dots-three-circle' | 'file-image' | 'file';
+export type IconName =
+	| 'broom'
+	| 'dots-three-circle'
+	| 'file-image'
+	| 'file'
+	| 'spinner-gap'
+	| 'sun-horizon';
