@@ -12,7 +12,7 @@
 	<Header />
 	<Sidebar />
 
-	<div class="overflow-scroll rounded-lg border border-slate-400 bg-white">
+	<div class="flex flex-col overflow-scroll rounded-lg border border-slate-400 bg-white">
 		<slot />
 	</div>
 </div>

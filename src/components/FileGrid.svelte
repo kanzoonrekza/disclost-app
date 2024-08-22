@@ -21,7 +21,7 @@
 			<Icon icon="file" />
 		{/if}
 	</div>
-	<div class="flex items-start align-middle pt-1 justify-between gap-2">
+	<div class="flex items-start justify-between gap-2 pt-1 align-middle">
 		<!-- TODO: hover show full name -->
 		<span class="line-clamp-2 text-sm font-medium">{file.name}</span>
 		<FileDropdownMenu itemData={file} {refetch} />
